@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HDN Hub</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f3f4f6; }
+        /* Ini adalah "jendela" ghaib untuk memanggil Google Script Mas */
+        iframe { width: 100%; height: 100%; border: none; display: block; }
+    </style>
+</head>
+<body>
+    <iframe src="https://script.google.com/macros/s/AKfycbxqg-myVeGMofmpo2IRU_V9qjVW9xPkMDhVtn6Mp-67aoqepvdCplxZXZZ1Ttop3OAO/exec?p=portal" allow="geolocation"></iframe>
+    
+    <script>
+        // Memanggil Nyawa 3 (Satpam PWA)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+            .then(() => console.log('Service Worker Aktif!'))
+            .catch((err) => console.log('Gagal:', err));
+        }
+    </script>
+</body>
+</html>
