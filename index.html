@@ -18,6 +18,29 @@
         iframe { width: 100%; height: 100%; border: none; display: block; }
     </style>
 </head>
+
+<button id="installBtn" style="display:none;position:fixed;bottom:20px;right:20px;padding:12px 20px;background:#059669;color:white;border:none;border-radius:50px;font-weight:bold;">
+Install App
+</button>
+
+<script>
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+});
+
+installBtn.addEventListener('click', async () => {
+  installBtn.style.display = 'none';
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+});
+</script>
+    
 <body>
     <iframe src="https://script.google.com/macros/s/AKfycby5wk2CimGxYNsmqgJsPN1Q0C6toL7KHaEGDsEp1IEhq-7jMKrqPgmrI89T2A6BgvH2/exec" allow="geolocation"></iframe>
     
