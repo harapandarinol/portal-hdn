@@ -1,56 +1,14 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HDN Hub</title>
-    <link rel="manifest" href="manifest.json">
+// GANTI INI:
+// google.script.run.withSuccessHandler(res => { ... }).doLogin(email, pass);
 
-    <meta name="theme-color" content="#059669">
+// MENJADI INI:
+const WEB_APP_URL = "URL_DEPLOYMENT_GAS_KAMU_DISINI";
 
-    <link rel="apple-touch-icon" href="icon.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #f3f4f6; }
-        /* Ini adalah "jendela" ghaib untuk memanggil Google Script Mas */
-        iframe { width: 100%; height: 100%; border: none; display: block; }
-    </style>
-</head>
-
-<button id="installBtn" style="display:none;position:fixed;bottom:20px;right:20px;padding:12px 20px;background:#059669;color:white;border:none;border-radius:50px;font-weight:bold;">
-Install App
-</button>
-
-<script>
-let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = 'block';
+fetch(WEB_APP_URL, {
+  method: "POST",
+  body: JSON.stringify({action: "login", email: email, pass: pass})
+})
+.then(res => res.json())
+.then(res => {
+  if(res.status === 'SUCCESS') loginSuccess(res.user);
 });
-
-installBtn.addEventListener('click', async () => {
-  installBtn.style.display = 'none';
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt = null;
-});
-</script>
-    
-<body>
-    <iframe src="https://script.google.com/macros/s/AKfycbxucDcaIFwSRBv7gxMaxY-_Cd4AIp3_8dqpHisgEBCuCADKsz_KLITEqHASIMb2IMa7/exec" allow="geolocation"></iframe>
-    
-    <script>
-        // Memanggil Nyawa 3 (Satpam PWA)
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-            .then(() => console.log('Service Worker Aktif!'))
-            .catch((err) => console.log('Gagal:', err));
-        }
-    </script>
-</body>
-</html>
